@@ -46,6 +46,10 @@ def cleantweets(tweet):
     return temp
 
 df['CleanTweet'] = df['Tweet'].apply(cleantweets)
+df['Date'] = pd.to_datetime(df['Date']) 
+df['Time'] = df['Date'].dt.time
+
+df['Months'] = pd.DatetimeIndex(df['Date']).month_name()
 
 def TextSubjectivity(tweet):
     return TextBlob(tweet).sentiment.subjectivity
@@ -73,7 +77,7 @@ def getTextAnalysis(a):
 
 df["Score"] = df['Polarity'].apply(getTextAnalysis)
 df.to_csv('processed_tweets.csv')
-print(df.head(20))
+# print(df['CleanTweet'])
 
 #%%
 positive = df[df['Score'] == "Positive"]
