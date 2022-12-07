@@ -1,8 +1,8 @@
 # Sentiment_Analysis_of_Pearl's_Tweets_Using_PowerBI
 
-Sam Harris a modern intellectual and someone I highly respect left twitter in November this year, and described his leaving as a way to look better at society. Apparently he had resulted to blocking people enmasse and realzied his perception of the world and how he viewed people had changed due to his interaction on twitter. 
-I then became interested in my imapact to the society on twitter.
-I decided to scrape all my tweets since I joined twitter in June 2021 and palapate the temprance of my tweets using sentiment analysis.
+Sam Harris a modern intellectual and someone I highly respect left twitter in November this year, and described his leaving as a way to look better at society. Apparently he had resulted to blocking people en-masse and realized his perception of the world and how he viewed people had changed due to his interaction on twitter. 
+I then became interested in my impact to the society on twitter.
+I decided to scrape all my tweets since I joined twitter in June 2021 and palpate the temperance of my tweets using sentiment analysis.
 
 # The Documentation includes:
 - Data Gathering and Transformation
@@ -60,7 +60,7 @@ Python is not the best tool for visualization because its visual is not appealin
 My most liked tweet got over a thousand likes because from my personal opinion it was a positive tweet but somehow textblob construed it as negative.
 TextBlob is a python library for Natural Language Processing (NLP).TextBlob actively used Natural Language ToolKit (NLTK) to achieve its tasks. NLTK is a library which gives an easy access to a lot of lexical resources and allows users to work with categorization, classification and many other tasks. TextBlob is a simple library which supports complex analysis and operations on textual data. It is obviously not error free but still gives us a fairly decent idea on the sentiments attached to our conversations.
 # Conclusion
-Overall, I'd say my tweets have been decent, I could definitely do better in commuincating my thoughts in a postive light because what are wee doing if we are not leaving the lives that meet us (virtually or phsyically) more positive than before they did meet us?
+Overall, I'd say my tweets have been decent, but I could definitely do better at communicating my thoughts in a positive light. After all, what are we doing if we don't leave the lives we encounter (virtually or physically) in a better place than when we first did?
 
 
 
