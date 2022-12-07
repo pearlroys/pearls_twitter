@@ -6,7 +6,7 @@ import re
 import matplotlib.pyplot as plt
 import nltk
 
-
+# user to scrape from, number of tweets to scrape
 query = "(from:aylaazari) until:2022-11-28 since:2021-06-30"
 tweets = []
 limit = 3790
@@ -14,24 +14,32 @@ limit = 3790
 
 for tweet in sntwitter.TwitterSearchScraper(query).get_items():
     
-    # print(vars(tweet))
-    # break
+   
+    # tweet values to scrape
     if len(tweets) == limit:
         break
     else:
         tweets.append([tweet.date, tweet.username, tweet.content, tweet.likeCount, tweet.retweetCount])
-        
+# save to a dataframe  
 df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet', 'num_of_likes', 'num_of_retweet'])
-# print(df)
+
 
 # to save to csv
 df.to_csv('tweets.csv')
-# df.head()
+
 
 def cleantweets(tweet):
+    """ a function to clean the tweets by removing stop words, 
+    smileys and other things that would interefere with analysis
+
+    Args:
+        tweet (str): tweets scarped
+
+    Returns:
+        _type_: tweets having being cleaned
+    """
     stopwords = ["for", "on", "an", "a", "of", "and", "in", "the", "to", "from"]
-    # if type(tweet) == np.float:
-    #     return ""
+    
     temp = tweet.lower()
     temp = re.sub("'", "", temp) # to avoid removing contractions in english
     temp = re.sub("@[A-Za-z0-9_]+","", temp)
@@ -45,12 +53,18 @@ def cleantweets(tweet):
     temp = " ".join(word for word in temp)
     return temp
 
+# to remove rows in which tweets that are empty
+df = df.drop(df[df['Tweet'] == ''].index) 
+
+# append cleantweets to the dataframe, and other necessary columns neeeded
 df['CleanTweet'] = df['Tweet'].apply(cleantweets)
 df['Date'] = pd.to_datetime(df['Date']) 
 df['Time'] = df['Date'].dt.time
-
+#appends a column to the df that extracts just the month when the tweets were made
 df['Months'] = pd.DatetimeIndex(df['Date']).month_name()
 
+
+# sentiment analysis
 def TextSubjectivity(tweet):
     return TextBlob(tweet).sentiment.subjectivity
 
@@ -59,11 +73,11 @@ def TextPolarity(tweet):
 
 
 #%%
-df['Subjectivity'] = df['Tweet'].apply(TextSubjectivity)
-df['Polarity'] = df['Tweet'].apply(TextPolarity)
+# adds subjectivity and polarity column to the dataframe
+df['Subjectivity'] = df['CleanTweet'].apply(TextSubjectivity)
+df['Polarity'] = df['CleanTweet'].apply(TextPolarity)
 
 
-df = df.drop(df[df['CleanTweet'] == ''].index)
 
 #%%
 def getTextAnalysis(a):
@@ -80,6 +94,7 @@ df.to_csv('processed_tweets.csv')
 # print(df['CleanTweet'])
 
 #%%
+# gives percentage of tweets are positive, negative or neutral
 positive = df[df['Score'] == "Positive"]
 print(str(positive.shape[0]/(df.shape[0])*100) + "% positive tweets")
 pos = positive.shape[0]/df.shape[0] * 100
@@ -94,10 +109,12 @@ neutrall = neutral.shape[0]/df.shape[0] * 100
 
 
 #%%
+#plots pie chart with the result from the sentiment analysis
 explode = (0, 0.1, 0)
 labels = 'Positive', 'Negative', 'Neutral'
 sizes = [pos, neg, neutrall]
 colors = ['yellow', 'pink', 'red']
+
 
 plt.pie(sizes,explode = explode,colors = colors,autopct = '%1.1f%%', startangle = 120)
 plt.legend(labels,loc = (-0.05,0.05), shadow = True)
