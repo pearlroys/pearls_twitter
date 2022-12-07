@@ -51,7 +51,7 @@ A new column called CleanTweet is created and can be seen below.
 After data wrangling/pre-processing, TextBlob library is used to get the level of the text polarity; that is, the value of how good, bad or neutral the text is which is between the range of 1 to -1. A condition is set to get the sentiment which is set at < 0 is positive, == 0 is neutral and > 1 is negative.
 
 # Data Visualization & Power BI Report
-To visualize the data and tell a more compelling story, we will be using Microsoft Power BI.
+To visualize the data and tell a more compelling story, I will be using Microsoft Power BI.
 Python is not the best tool for visualization because its visual is not appealing to the eyes. 
 
 
